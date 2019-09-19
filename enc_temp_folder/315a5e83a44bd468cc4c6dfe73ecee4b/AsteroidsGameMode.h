@@ -37,9 +37,6 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = InfoSpawn)
 	TArray<float> SpawnAngles_USER;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = InfoSpawn)
-	TSubclassOf<AMeteoritActor> Meteiorit;
-
 	/*UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = InfoSpawn)
 	UUserWidget* Hud_Ref;*/
 
@@ -66,6 +63,6 @@ private:
 	int32 Score;
 	int32 Lives;
 	USaveGameData* SaveGameRef;
-	
+	TSubclassOf<AMeteoritActor> Meteiorit;
 	TSubclassOf<AShipActor> ShipPlayer;
 };

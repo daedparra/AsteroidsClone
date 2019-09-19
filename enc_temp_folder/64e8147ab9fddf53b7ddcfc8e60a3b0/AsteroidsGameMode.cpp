@@ -46,12 +46,12 @@ void AAsteroidsGameMode::SpawnMeteorit()
 		});
 		int32 j = FMath::RandRange(0, SpawnPoints_Temporal.Num() - 1 );
 		FVector res = FVector(X_Max, 0.0f, Z_Max);
-		FVector result = res.RotateAngleAxis(SpawnPoints_Temporal[j], FVector(0.0f, 1.0f, 0.0f));
+		res.RotateAngleAxis(SpawnPoints_Temporal[j], FVector(0.0f, 1.0f, 0.0f));
 
 		FActorSpawnParameters SpawnInfo;
 		SpawnInfo.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 		SpawnInfo.Owner = this;
-		FVector SpawnLocation = result;
+		FVector SpawnLocation = res;
 		FRotator SpawnRotation = FRotator(0,0,0);
 		AMeteoritActor* SpawnedMeteorit = Cast<AMeteoritActor>(GetWorld()->SpawnActor(Meteiorit, &SpawnLocation, &SpawnRotation, SpawnInfo));
 		SpawnedMeteorit->type = Type::BIG;
