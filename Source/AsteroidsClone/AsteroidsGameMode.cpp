@@ -10,6 +10,7 @@
 #include "Blueprint/UserWidget.h"
 #include "MeteoritActor.h"
 #include "SaveGameData.h"
+#include "GameHud.h"
 
 AAsteroidsGameMode::AAsteroidsGameMode() 
 {
@@ -29,7 +30,9 @@ void AAsteroidsGameMode::BeginPlay()
 	FTimerHandle TimerHR;
 	TimerR.BindUFunction(this, FName("SpawnMeteorit"));
 	GetWorldTimerManager().SetTimer(TimerHR, TimerR, FMath::RandRange(6.0f,10.0f), true);
-	//Hud_Ref->AddToViewport(9999); // Z-order, this just makes it render on the very top.
+	APlayerController* PC = UGameplayStatics::GetPlayerController(GetWorld(), 0);
+	GameInfoWidget = CreateWidget<UGameHud>(PC, Hud_Ref);
+	GameInfoWidget->AddToViewport();
 	CheckSaveGame();
 }
 
@@ -64,21 +67,23 @@ void AAsteroidsGameMode::CheckSaveGame()
 	if (LoadGameInstance != nullptr)
 	{
 		SaveGameRef = LoadGameInstance;
-		if (GEngine)
-		{
-			GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Red, "Best Score:" +  FString::FromInt(SaveGameRef->BestScore));
-			//Add to hud
-		}
+		//if (GEngine)
+		//{
+		//	GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Red, "Best Score:" +  FString::FromInt(SaveGameRef->BestScore));
+		//	//Add to hud
+		//}
+		GameInfoWidget->UpdateBestScore(SaveGameRef->BestScore);
 	}
 	else {
 		USaveGameData* SaveGameInstance = Cast<USaveGameData>(UGameplayStatics::CreateSaveGameObject(USaveGameData::StaticClass()));
 		SaveGameRef = SaveGameInstance;
 		SaveGameRef->BestScore = 0;
-		if (GEngine)
-		{
-			GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Red, "Best Score:" + FString::FromInt(SaveGameRef->BestScore));
-			//Add to hud
-		}
+		//if (GEngine)
+		//{
+		//	GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Red, "Best Score:" + FString::FromInt(SaveGameRef->BestScore));
+		//	//Add to hud
+		//}
+		GameInfoWidget->UpdateBestScore(SaveGameRef->BestScore);
 		UGameplayStatics::SaveGameToSlot(SaveGameRef, SaveGameRef->SaveSlotName, SaveGameRef->UserIndex);
 	}
 }
@@ -86,22 +91,24 @@ void AAsteroidsGameMode::CheckSaveGame()
 void AAsteroidsGameMode::UpdateScore(int32 Bonus)
 {
 	Score += Bonus;
-	if (GEngine)
-	{
-		GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Green, "Score:" + FString::FromInt(Score));
-		//Add to hud
-	}
+	//if (GEngine)
+	//{
+	//	GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Green, "Score:" + FString::FromInt(Score));
+	//	//Add to hud
+	//}
+	GameInfoWidget->UpdateScore(Score);
 }
 
 //will be call after one second
 void AAsteroidsGameMode::TryToSpawnPlayer()
 {
 	Lives -= 1;
-	if (GEngine)
-	{
-		GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Blue, "Lives:" + FString::FromInt(Lives));
-		//Add to hud for function update lives
-	}
+	//if (GEngine)
+	//{
+	//	GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Blue, "Lives:" + FString::FromInt(Lives));
+	//	//Add to hud for function update lives
+	//}
+	GameInfoWidget->UpdateLives(Lives);
 	if (Lives < 1) 
 	{
 		//call game over event
@@ -113,11 +120,12 @@ void AAsteroidsGameMode::TryToSpawnPlayer()
 			if (SaveGameRef->BestScore <= Score) 
 			{
 				SaveGameRef->BestScore = Score;
-				if (GEngine)
-				{
-					GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Red, "Best Score:" + FString::FromInt(SaveGameRef->BestScore));
-					//Add to hud
-				}
+				//if (GEngine)
+				//{
+				//	GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Red, "Best Score:" + FString::FromInt(SaveGameRef->BestScore));
+				//	//Add to hud
+				//}
+				GameInfoWidget->UpdateBestScore(SaveGameRef->BestScore);
 				UGameplayStatics::SaveGameToSlot(SaveGameRef, SaveGameRef->SaveSlotName, SaveGameRef->UserIndex);
 			}
 		}

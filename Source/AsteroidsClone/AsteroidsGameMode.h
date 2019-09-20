@@ -13,6 +13,7 @@ class UUserWidget;
 class AMeteoritActor;
 class USaveGameData;
 
+class UGameHud;
 UCLASS()
 class ASTEROIDSCLONE_API AAsteroidsGameMode : public AGameModeBase
 {
@@ -41,8 +42,8 @@ public:
 	TSubclassOf<AMeteoritActor> Meteiorit;
 
 
-	/*UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = InfoSpawn)
-	UUserWidget* Hud_Ref;*/
+	UPROPERTY(EditDefaultsOnly)
+		TSubclassOf<UGameHud> Hud_Ref;
 
 	UFUNCTION()
 		void UpdateScore(int32 Bonus);
@@ -69,4 +70,7 @@ private:
 	int32 Score;
 	int32 Lives;
 	USaveGameData* SaveGameRef;
+
+	UPROPERTY()
+		UGameHud* GameInfoWidget;
 };

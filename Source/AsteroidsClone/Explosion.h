@@ -17,7 +17,7 @@ class ASTEROIDSCLONE_API AExplosion : public AActor
 public:	
 	// Sets default values for this actor's properties
 	AExplosion();
-	float time = 2.0;
+	float time = 1.0;
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

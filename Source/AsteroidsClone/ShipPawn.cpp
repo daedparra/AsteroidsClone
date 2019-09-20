@@ -22,6 +22,7 @@ AShipPawn::AShipPawn()
 	SpriteComponent->AttachTo(RootComponent);
 	SpriteComponent->OnComponentBeginOverlap.AddDynamic(this, &AShipPawn::OnOverlapBegin);
 	AutoPossessPlayer = EAutoReceiveInput::Player0;
+
 }
 
 void AShipPawn::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
@@ -101,7 +102,7 @@ void AShipPawn::fireTimer()
 	FVector SpawnLocation = GetActorLocation();
 	FRotator SpawnRotation = GetActorRotation();
 	AMissileActor* SpawnedMissile = Cast<AMissileActor>(GetWorld()->SpawnActor(Missile, &SpawnLocation, &SpawnRotation, SpawnInfo));
-	SpawnedMissile->ProjectileMovementComponent->SetVelocityInLocalSpace(FVector(900, 0, 0));
+	SpawnedMissile->ProjectileMovementComponent->SetVelocityInLocalSpace(FVector(1200, 0, 0));
 }
 
 void AShipPawn::CollsionBack()
