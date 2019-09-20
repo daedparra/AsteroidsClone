@@ -2,6 +2,11 @@
 
 #include "MissileActor.h"
 #include "PaperSpriteComponent.h"
+#include "MeteoritActor.h"
+#include "Kismet/KismetMathLibrary.h"
+#include "UObject/ConstructorHelpers.h"
+#include "Runtime/Engine/Classes/Kismet/GameplayStatics.h"
+
 // Sets default values
 AMissileActor::AMissileActor()
 {
@@ -9,10 +14,24 @@ AMissileActor::AMissileActor()
 	PrimaryActorTick.bCanEverTick = true;
 	SpriteComponent = CreateDefaultSubobject<UPaperSpriteComponent>(TEXT("Sprite"));
 	SpriteComponent->AttachTo(RootComponent);
+	SpriteComponent->OnComponentBeginOverlap.AddDynamic(this, &AMissileActor::OnOverlapBegin);
 	ProjectileMovementComponent = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("ProjectileMovementComponent"));
 	ProjectileMovementComponent->MaxSpeed = Velocity;
 	ProjectileMovementComponent->InitialSpeed = Velocity;
 	ProjectileMovementComponent->ProjectileGravityScale = 0.f;
+}
+
+void AMissileActor::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
+{
+	if (Cast<AMeteoritActor>(OtherActor))
+	{
+		if (UPrimitiveComponent* PrimitiveComponent = FindComponentByClass<UPrimitiveComponent>())
+		{
+			PrimitiveComponent->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Ignore);
+		}
+		Cast<AMeteoritActor>(OtherActor)->GetDestroy();
+		this->Destroy();
+	}
 }
 
 // Called when the game starts or when spawned

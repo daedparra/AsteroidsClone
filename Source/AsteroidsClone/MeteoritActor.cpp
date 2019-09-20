@@ -59,7 +59,7 @@ void AMeteoritActor::SetMeteorit(Type type)
 	}
 }
 
-void AMeteoritActor::Destroy()
+void AMeteoritActor::GetDestroy()
 {
 	AAsteroidsGameMode* gm = Cast<AAsteroidsGameMode>(GetWorld()->GetAuthGameMode());
 	if (type == Type::BIG)

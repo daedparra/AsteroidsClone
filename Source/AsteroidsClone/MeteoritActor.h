@@ -55,7 +55,7 @@ public:
 		void SetMeteorit(Type type);
 
 	UFUNCTION()
-		void Destroy();
+		void GetDestroy();
 
 	UFUNCTION()
 		void SpawnNew(Type type);
