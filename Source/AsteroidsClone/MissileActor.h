@@ -4,33 +4,34 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "ShipActor.generated.h"
+#include "GameFramework/ProjectileMovementComponent.h"
+#include "MissileActor.generated.h"
 
 class UPaperSpriteComponent;
-
 UCLASS()
-class ASTEROIDSCLONE_API AShipActor : public AActor
+class ASTEROIDSCLONE_API AMissileActor : public AActor
 {
 	GENERATED_BODY()
 
 	UPROPERTY(EditAnywhere)
 		UPaperSpriteComponent* SpriteComponent;
 	
+	
+	
 public:	
 	// Sets default values for this actor's properties
-	AShipActor();
+	AMissileActor();
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Projectile")
+		float Velocity;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Projectile Movement")
+		UProjectileMovementComponent* ProjectileMovementComponent;
+
 
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
-
-	UFUNCTION()
-		void RotateShipWithMouse();
-	UFUNCTION()
-		void MoveShip();
-	FHitResult HitResult;
-	float HitResultTraceDistance;
-	bool bMouseInput;
 
 public:	
 	// Called every frame

@@ -4,33 +4,23 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "ShipActor.generated.h"
+#include "Explosion.generated.h"
 
-class UPaperSpriteComponent;
-
+class UPaperFlipbookComponent;
 UCLASS()
-class ASTEROIDSCLONE_API AShipActor : public AActor
+class ASTEROIDSCLONE_API AExplosion : public AActor
 {
 	GENERATED_BODY()
-
-	UPROPERTY(EditAnywhere)
-		UPaperSpriteComponent* SpriteComponent;
 	
+	UPROPERTY(EditAnywhere)
+		UPaperFlipbookComponent* SpriteComponent;
 public:	
 	// Sets default values for this actor's properties
-	AShipActor();
-
+	AExplosion();
+	float time = 2.0;
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
-
-	UFUNCTION()
-		void RotateShipWithMouse();
-	UFUNCTION()
-		void MoveShip();
-	FHitResult HitResult;
-	float HitResultTraceDistance;
-	bool bMouseInput;
 
 public:	
 	// Called every frame

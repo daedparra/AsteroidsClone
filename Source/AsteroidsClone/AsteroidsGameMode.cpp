@@ -10,7 +10,6 @@
 #include "Blueprint/UserWidget.h"
 #include "MeteoritActor.h"
 #include "SaveGameData.h"
-#include "ShipActor.h"
 
 AAsteroidsGameMode::AAsteroidsGameMode() 
 {
@@ -25,7 +24,6 @@ void AAsteroidsGameMode::BeginPlay()
 	Lives = Lives_USER;
 	Score = Score_USER;
 	SpawnAngles = SpawnAngles_USER;
-
 	SpawnMeteorit();
 	FTimerDelegate TimerR;
 	FTimerHandle TimerHR;
@@ -104,16 +102,7 @@ void AAsteroidsGameMode::TryToSpawnPlayer()
 		GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Blue, "Lives:" + FString::FromInt(Lives));
 		//Add to hud for function update lives
 	}
-	if (Lives > 1) 
-	{
-		FActorSpawnParameters SpawnInfo;
-		SpawnInfo.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
-		SpawnInfo.Owner = this;
-		FVector SpawnLocation = FVector(0.0f, 0.0f, 0.0f);
-		FRotator SpawnRotation = FRotator(0.0f, 0.0f, 0.0f);
-		AShipActor* SpawnedShip = Cast<AShipActor>(GetWorld()->SpawnActor(ShipPlayer, &SpawnLocation, &SpawnRotation, SpawnInfo));
-	}
-	else 
+	if (Lives < 1) 
 	{
 		//call game over event
 		USaveGameData* LoadGameInstance = Cast<USaveGameData>(UGameplayStatics::CreateSaveGameObject(USaveGameData::StaticClass()));

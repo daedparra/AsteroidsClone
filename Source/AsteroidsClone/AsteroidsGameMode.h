@@ -12,7 +12,7 @@
 class UUserWidget;
 class AMeteoritActor;
 class USaveGameData;
-class AShipActor;
+
 UCLASS()
 class ASTEROIDSCLONE_API AAsteroidsGameMode : public AGameModeBase
 {
@@ -40,6 +40,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = InfoSpawn)
 	TSubclassOf<AMeteoritActor> Meteiorit;
 
+
 	/*UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = InfoSpawn)
 	UUserWidget* Hud_Ref;*/
 
@@ -48,6 +49,9 @@ public:
 
 	UFUNCTION()
 		void TryToSpawnPlayer();
+
+	int32 X_Max;
+	int32 Z_Max;
 
 private:
 
@@ -60,12 +64,9 @@ private:
 	
 
 	TArray<float> SpawnPoints_Temporal;
-	int32 X_Max;
-	int32 Z_Max;
+	
 	TArray<float> SpawnAngles;
 	int32 Score;
 	int32 Lives;
 	USaveGameData* SaveGameRef;
-	
-	TSubclassOf<AShipActor> ShipPlayer;
 };

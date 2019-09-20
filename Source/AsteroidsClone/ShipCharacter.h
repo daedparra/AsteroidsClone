@@ -3,37 +3,32 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameFramework/Actor.h"
-#include "ShipActor.generated.h"
+#include "GameFramework/Character.h"
+#include "ShipCharacter.generated.h"
 
 class UPaperSpriteComponent;
-
 UCLASS()
-class ASTEROIDSCLONE_API AShipActor : public AActor
+class ASTEROIDSCLONE_API AShipCharacter : public ACharacter
 {
 	GENERATED_BODY()
-
+	
 	UPROPERTY(EditAnywhere)
 		UPaperSpriteComponent* SpriteComponent;
-	
-public:	
-	// Sets default values for this actor's properties
-	AShipActor();
 
+public:
+	// Sets default values for this character's properties
+	AShipCharacter();
+	void MoveForward(float Value);
+	void MoveRight(float Value);
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-	UFUNCTION()
-		void RotateShipWithMouse();
-	UFUNCTION()
-		void MoveShip();
-	FHitResult HitResult;
-	float HitResultTraceDistance;
-	bool bMouseInput;
-
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+
+	// Called to bind functionality to input
+	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 };
