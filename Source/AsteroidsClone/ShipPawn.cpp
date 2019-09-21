@@ -102,7 +102,7 @@ void AShipPawn::fireTimer()
 	FVector SpawnLocation = GetActorLocation();
 	FRotator SpawnRotation = GetActorRotation();
 	AMissileActor* SpawnedMissile = Cast<AMissileActor>(GetWorld()->SpawnActor(Missile, &SpawnLocation, &SpawnRotation, SpawnInfo));
-	SpawnedMissile->ProjectileMovementComponent->SetVelocityInLocalSpace(FVector(1200, 0, 0));
+	if(SpawnedMissile != nullptr) SpawnedMissile->ProjectileMovementComponent->SetVelocityInLocalSpace(FVector(1200, 0, 0));
 }
 
 void AShipPawn::CollsionBack()

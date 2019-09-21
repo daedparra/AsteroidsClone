@@ -36,6 +36,12 @@ public:
 		int32 Lives_USER = 3;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = InfoSpawn)
+		int32 MinNumberofMeteorits = 4;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = InfoSpawn)
+		int32 MaxNumberofMeteorits = 7;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = InfoSpawn)
 	TArray<float> SpawnAngles_USER;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = InfoSpawn)

@@ -39,7 +39,7 @@ void AAsteroidsGameMode::BeginPlay()
 void AAsteroidsGameMode::SpawnMeteorit()
 {
 	SpawnPoints_Temporal = SpawnAngles;
-	int32 LastIndex = FMath::RandRange(3, 5);
+	int32 LastIndex = FMath::RandRange(MinNumberofMeteorits, MaxNumberofMeteorits);
 	for (size_t i = 0; i < LastIndex; i++)
 	{
 		SpawnPoints_Temporal.Sort([this](const int Item1, const int Item2) {
@@ -67,22 +67,12 @@ void AAsteroidsGameMode::CheckSaveGame()
 	if (LoadGameInstance != nullptr)
 	{
 		SaveGameRef = LoadGameInstance;
-		//if (GEngine)
-		//{
-		//	GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Red, "Best Score:" +  FString::FromInt(SaveGameRef->BestScore));
-		//	//Add to hud
-		//}
 		GameInfoWidget->UpdateBestScore(SaveGameRef->BestScore);
 	}
 	else {
 		USaveGameData* SaveGameInstance = Cast<USaveGameData>(UGameplayStatics::CreateSaveGameObject(USaveGameData::StaticClass()));
 		SaveGameRef = SaveGameInstance;
 		SaveGameRef->BestScore = 0;
-		//if (GEngine)
-		//{
-		//	GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Red, "Best Score:" + FString::FromInt(SaveGameRef->BestScore));
-		//	//Add to hud
-		//}
 		GameInfoWidget->UpdateBestScore(SaveGameRef->BestScore);
 		UGameplayStatics::SaveGameToSlot(SaveGameRef, SaveGameRef->SaveSlotName, SaveGameRef->UserIndex);
 	}
@@ -91,11 +81,6 @@ void AAsteroidsGameMode::CheckSaveGame()
 void AAsteroidsGameMode::UpdateScore(int32 Bonus)
 {
 	Score += Bonus;
-	//if (GEngine)
-	//{
-	//	GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Green, "Score:" + FString::FromInt(Score));
-	//	//Add to hud
-	//}
 	GameInfoWidget->UpdateScore(Score);
 }
 
@@ -103,15 +88,13 @@ void AAsteroidsGameMode::UpdateScore(int32 Bonus)
 void AAsteroidsGameMode::TryToSpawnPlayer()
 {
 	Lives -= 1;
-	//if (GEngine)
-	//{
-	//	GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Blue, "Lives:" + FString::FromInt(Lives));
-	//	//Add to hud for function update lives
-	//}
 	GameInfoWidget->UpdateLives(Lives);
 	if (Lives < 1) 
 	{
 		//call game over event
+		APlayerController* PC = UGameplayStatics::GetPlayerController(GetWorld(), 0);
+		PC->SetPause(true);
+		GameInfoWidget->GameOVer();
 		USaveGameData* LoadGameInstance = Cast<USaveGameData>(UGameplayStatics::CreateSaveGameObject(USaveGameData::StaticClass()));
 		LoadGameInstance = Cast<USaveGameData>(UGameplayStatics::LoadGameFromSlot(LoadGameInstance->SaveSlotName, LoadGameInstance->UserIndex));
 		if (LoadGameInstance != nullptr)
@@ -120,14 +103,9 @@ void AAsteroidsGameMode::TryToSpawnPlayer()
 			if (SaveGameRef->BestScore <= Score) 
 			{
 				SaveGameRef->BestScore = Score;
-				//if (GEngine)
-				//{
-				//	GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Red, "Best Score:" + FString::FromInt(SaveGameRef->BestScore));
-				//	//Add to hud
-				//}
 				GameInfoWidget->UpdateBestScore(SaveGameRef->BestScore);
-				UGameplayStatics::SaveGameToSlot(SaveGameRef, SaveGameRef->SaveSlotName, SaveGameRef->UserIndex);
 			}
+			UGameplayStatics::SaveGameToSlot(SaveGameRef, SaveGameRef->SaveSlotName, SaveGameRef->UserIndex);
 		}
 	}
 }

@@ -4,6 +4,6 @@
 
 USaveGameData::USaveGameData() 
 {
-	SaveSlotName = TEXT("BestScore");
-	UserIndex = 0;
+	SaveSlotName = TEXT("BestScores");
+	UserIndex = 1;
 }

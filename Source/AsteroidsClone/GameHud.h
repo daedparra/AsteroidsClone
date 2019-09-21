@@ -21,17 +21,19 @@ class ASTEROIDSCLONE_API UGameHud : public UUserWidget
 public:
 
 	UFUNCTION()
-		void UpdateScore(float score);
+		void UpdateScore(int32 score);
 	UFUNCTION()
-		void UpdateBestScore(float best);
+		void UpdateBestScore(int32 best);
 	UFUNCTION()
-		void UpdateLives(float live);
-
+		void UpdateLives(int32 live);
+	UFUNCTION()
+		void GameOVer();
 private:
-	float score = 0.0f;
-	float bestScore = 0.0f;
-	float lives = 0.0f;
+	int32 score = 0;
+	int32 bestScore = 0;
+	int32 lives = 0;
 	UTextBlock* Score;
 	UTextBlock* BestScore;
 	UTextBlock* Live;
+	UTextBlock* GAMEOVER;
 };

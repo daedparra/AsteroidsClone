@@ -26,6 +26,11 @@ bool UGameHud::Initialize()
 	{
 		Live->SetText(FText::FromString("x 3"));
 	}
+	GAMEOVER = Cast<UTextBlock>(GetWidgetFromName("GAMEOVER"));
+	if (GAMEOVER != nullptr)
+	{
+		GAMEOVER->SetOpacity(0);
+	}
 	return true;
 }
 //static int myValue = 0;
@@ -36,29 +41,34 @@ void UGameHud::NativeTick(const FGeometry & MyGeometry, float InDeltaTime)
 
 }
 
-void UGameHud::UpdateScore(float score)
+void UGameHud::UpdateScore(int32 score)
 {
 	this->score = score;
 	if (Score != nullptr)
 	{
-		Score->SetText(FText::FromString("Score: " + FString::SanitizeFloat(this->score)));
+		Score->SetText(FText::FromString("Score: " + FString::FromInt(this->score)));
 	}
 }
 
-void UGameHud::UpdateBestScore(float best)
+void UGameHud::UpdateBestScore(int32 best)
 {
 	this->bestScore = best;
 	if (BestScore != nullptr)
 	{
-		BestScore->SetText(FText::FromString("BestScore: 0" + FString::SanitizeFloat(this->bestScore)));
+		BestScore->SetText(FText::FromString("BestScore: " + FString::FromInt(this->bestScore)));
 	}
 }
 
-void UGameHud::UpdateLives(float live)
+void UGameHud::UpdateLives(int32 live)
 {
 	this->lives = live;
 	if (Live != nullptr)
 	{
-		Live->SetText(FText::FromString("x " + FString::SanitizeFloat(this->lives)));
+		Live->SetText(FText::FromString("x " + FString::FromInt(this->lives)));
 	}
+}
+
+void UGameHud::GameOVer()
+{
+	GAMEOVER->SetOpacity(1);
 }
