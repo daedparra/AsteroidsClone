@@ -29,6 +29,7 @@ public:
 	UFUNCTION()
 		void GameOVer();
 private:
+	//variables of score, best and live, for the hud
 	int32 score = 0;
 	int32 bestScore = 0;
 	int32 lives = 0;

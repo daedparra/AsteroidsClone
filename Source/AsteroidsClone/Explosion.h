@@ -11,7 +11,7 @@ UCLASS()
 class ASTEROIDSCLONE_API AExplosion : public AActor
 {
 	GENERATED_BODY()
-	
+	//property for the sprite
 	UPROPERTY(EditAnywhere)
 		UPaperFlipbookComponent* SpriteComponent;
 public:	

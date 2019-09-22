@@ -14,10 +14,12 @@
 
 AAsteroidsGameMode::AAsteroidsGameMode() 
 {
+	//getting the bp of the meteorit
 	static ConstructorHelpers::FClassFinder<AActor> BP_Meteorit(TEXT("/Game/Blueprints/BP_MeteoritActor"));
 	Meteiorit = BP_Meteorit.Class;
 }
 
+//function for getting all the values of the user, and setting the timer for a function to run 
 void AAsteroidsGameMode::BeginPlay() 
 {
 	X_Max = X_Max_USER;
@@ -30,12 +32,16 @@ void AAsteroidsGameMode::BeginPlay()
 	FTimerHandle TimerHR;
 	TimerR.BindUFunction(this, FName("SpawnMeteorit"));
 	GetWorldTimerManager().SetTimer(TimerHR, TimerR, FMath::RandRange(6.0f,10.0f), true);
+	//getting the player controller for adding the hud 
 	APlayerController* PC = UGameplayStatics::GetPlayerController(GetWorld(), 0);
 	GameInfoWidget = CreateWidget<UGameHud>(PC, Hud_Ref);
 	GameInfoWidget->AddToViewport();
+	//This function will try to check if there is any best score saved
 	CheckSaveGame();
 }
 
+//function for spawning a meteorit, with the values that the user put in the bp. This values will 
+//generate the position where is going to spawn and the color of the meteorit
 void AAsteroidsGameMode::SpawnMeteorit()
 {
 	SpawnPoints_Temporal = SpawnAngles;
@@ -60,6 +66,8 @@ void AAsteroidsGameMode::SpawnMeteorit()
 	}
 }
 
+//This function will try to check if there is any best score saved
+//Using game instance, and save game data
 void AAsteroidsGameMode::CheckSaveGame()
 {
 	USaveGameData* LoadGameInstance = Cast<USaveGameData>(UGameplayStatics::CreateSaveGameObject(USaveGameData::StaticClass()));
@@ -78,6 +86,7 @@ void AAsteroidsGameMode::CheckSaveGame()
 	}
 }
 
+//Function for passing the score to the hud
 void AAsteroidsGameMode::UpdateScore(int32 Bonus)
 {
 	Score += Bonus;
@@ -91,7 +100,7 @@ void AAsteroidsGameMode::TryToSpawnPlayer()
 	GameInfoWidget->UpdateLives(Lives);
 	if (Lives < 1) 
 	{
-		//call game over event
+		//call game over event if the player died
 		APlayerController* PC = UGameplayStatics::GetPlayerController(GetWorld(), 0);
 		PC->SetPause(true);
 		GameInfoWidget->GameOVer();

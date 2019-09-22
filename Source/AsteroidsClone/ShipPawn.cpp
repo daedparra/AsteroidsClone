@@ -25,6 +25,7 @@ AShipPawn::AShipPawn()
 
 }
 
+//if the ship collides with any meteorit it will generated the dead function and will update the hud
 void AShipPawn::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
 	if (Cast<AMeteoritActor>(OtherActor)) 
@@ -50,6 +51,7 @@ void AShipPawn::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* Othe
 	}
 }
 
+//if the ship go over the black screen, it will auto spawn on the other side of the screen
 void AShipPawn::checkBounderies()
 {
 	AAsteroidsGameMode* gm = Cast<AAsteroidsGameMode>(GetWorld()->GetAuthGameMode());
@@ -71,6 +73,7 @@ void AShipPawn::checkBounderies()
 	}
 }
 
+//depending on the user input, it will move the ship by a delta time
 void AShipPawn::MoveShip(float DeltaTime)
 {
 	FVector face = FVector(HMovement, 0.f, VMovement);
@@ -94,6 +97,7 @@ void AShipPawn::MoveShip(float DeltaTime)
 	AddActorWorldOffset(MotionVectorTemp);
 }
 
+//if the user click the left mouse, it will shot a missile
 void AShipPawn::fireTimer()
 {
 	FActorSpawnParameters SpawnInfo;
@@ -136,7 +140,7 @@ void AShipPawn::Fire()
 	FTimerDelegate TimerR;
 	FTimerHandle TimerHR;
 	TimerR.BindUFunction(this, FName("fireTimer"));
-	GetWorldTimerManager().SetTimer(TimerHR, TimerR, 0.3, false);
+	GetWorldTimerManager().SetTimer(TimerHR, TimerR, 0.5, false);
 }
 
 // Called every frame

@@ -4,6 +4,7 @@
 #include "Components/TextBlock.h"
 #include "Kismet/GameplayStatics.h"
 
+//constructor for getting all the textblock in the widget, for setting them to cero
 bool UGameHud::Initialize()
 {
 	bool bResult = Super::Initialize();
@@ -41,6 +42,7 @@ void UGameHud::NativeTick(const FGeometry & MyGeometry, float InDeltaTime)
 
 }
 
+//function for changing the score in the hud
 void UGameHud::UpdateScore(int32 score)
 {
 	this->score = score;
@@ -50,6 +52,7 @@ void UGameHud::UpdateScore(int32 score)
 	}
 }
 
+//function for changing the bestscore in the hud
 void UGameHud::UpdateBestScore(int32 best)
 {
 	this->bestScore = best;
@@ -59,6 +62,7 @@ void UGameHud::UpdateBestScore(int32 best)
 	}
 }
 
+//Update lives with number, it can be as well with images
 void UGameHud::UpdateLives(int32 live)
 {
 	this->lives = live;
@@ -68,6 +72,7 @@ void UGameHud::UpdateLives(int32 live)
 	}
 }
 
+//spawn the game over screen, called from the game mode
 void UGameHud::GameOVer()
 {
 	GAMEOVER->SetOpacity(1);

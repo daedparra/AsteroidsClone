@@ -20,11 +20,13 @@ AMeteoritActor::AMeteoritActor()
 	// Create movement component and set rotation rate
 	RotatingComoponent = CreateDefaultSubobject<URotatingMovementComponent>(TEXT("RotatingComponent"));
 	RotatingComoponent->RotationRate = FRotator(0, 0, 0);
-
+	//create sprite component
 	SpriteComponent = CreateDefaultSubobject<UPaperSpriteComponent>(TEXT("Sprite"));
 	SpriteComponent->AttachTo(RootComponent);
 }
 
+//when a meteorit is created this function is going to be called
+//depending on the type of meteorit sprite and speed will be set for movement
 void AMeteoritActor::SetMeteorit(Type type)
 {
 	this->type = type;
@@ -59,6 +61,7 @@ void AMeteoritActor::SetMeteorit(Type type)
 	}
 }
 
+//if one of the meteorits get destroyed, two new ones will spawn 
 void AMeteoritActor::GetDestroy()
 {
 	AAsteroidsGameMode* gm = Cast<AAsteroidsGameMode>(GetWorld()->GetAuthGameMode());
@@ -81,6 +84,7 @@ void AMeteoritActor::GetDestroy()
 	}
 }
 
+//create new meteorits
 void AMeteoritActor::SpawnNew(Type type)
 {
 	for (size_t i = 0; i < 2; i++)

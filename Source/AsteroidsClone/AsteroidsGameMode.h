@@ -23,6 +23,7 @@ public:
 	AAsteroidsGameMode();
 	virtual void BeginPlay() override;
 
+	//Variables for the user to enter the values desired
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = InfoSpawn)
 		int32 X_Max_USER = 400;
 
@@ -51,9 +52,10 @@ public:
 	UPROPERTY(EditDefaultsOnly)
 		TSubclassOf<UGameHud> Hud_Ref;
 
+	//function to call the gamehud functions to update the hud
 	UFUNCTION()
 		void UpdateScore(int32 Bonus);
-
+	//if player die, we will respawn the ship
 	UFUNCTION()
 		void TryToSpawnPlayer();
 

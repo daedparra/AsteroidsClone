@@ -12,9 +12,12 @@ AMissileActor::AMissileActor()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
+	//creating sprite component
 	SpriteComponent = CreateDefaultSubobject<UPaperSpriteComponent>(TEXT("Sprite"));
 	SpriteComponent->AttachTo(RootComponent);
+	//getting overlap of actors
 	SpriteComponent->OnComponentBeginOverlap.AddDynamic(this, &AMissileActor::OnOverlapBegin);
+	//creating projectile component for the missile
 	ProjectileMovementComponent = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("ProjectileMovementComponent"));
 	ProjectileMovementComponent->MaxSpeed = Velocity;
 	ProjectileMovementComponent->InitialSpeed = Velocity;
@@ -23,6 +26,7 @@ AMissileActor::AMissileActor()
 
 void AMissileActor::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
 {
+	//if it collides with a meteorit it will destroy it
 	if (Cast<AMeteoritActor>(OtherActor))
 	{
 		if (UPrimitiveComponent* PrimitiveComponent = FindComponentByClass<UPrimitiveComponent>())

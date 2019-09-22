@@ -6,7 +6,7 @@
 #include "GameFramework/Actor.h"
 #include "MeteoritActor.generated.h"
 
-
+//enum for setting the type of the meteorit
 UENUM(BlueprintType)		//"BlueprintType" is essential to include
 enum class Type : uint8
 {
@@ -43,7 +43,7 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = InfoSpawn)
 		TArray<float> RotationPitch_USER;
-
+	//arrays of sprites, for setting how many type of asteroids will be in each type
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = InfoSpawn)
 		TArray<UPaperSprite*> LargeAsteroidsArray;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = InfoSpawn)
